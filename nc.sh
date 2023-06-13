@@ -1,5 +1,18 @@
 #!/bin/bash
-apt update && apt install wget sudo gnupg ffmpeg cmake imagemagick  -y
-echo "deb https://repo.delellis.com.ar bullseye bullseye" > /etc/apt/sources.list.d/20-pdlib.list
-wget -qO - https://repo.delellis.com.ar/repo.gpg.key | sudo apt-key add -
-apt-get update && apt-get install sudo libbz2-dev liblapack-dev libopenblas-dev php7.4-pdlib -y
+apt update && apt install git wget sudo gnupg ffmpeg cmake imagemagick  -y
+# Install DLIB
+git clone https://github.com/davisking/dlib.git
+cd dlib/dlib
+mkdir build
+cd build
+cmake -DBUILD_SHARED_LIBS=ON ..
+make
+sudo make install
+# Install PLIB
+git clone https://github.com/goodspb/pdlib.git
+cd pdlib
+phpize
+./configure
+make
+sudo make install
+
